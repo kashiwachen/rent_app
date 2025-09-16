@@ -1,0 +1,40 @@
+/* 通知操作 */
+"Mark Paid" = "標記已支付";
+"Remind Later" = "稍後提醒";
+"Contact Tenant" = "聯絡房客";
+
+/* 通知標題 */
+"Rent Due" = "房租到期";
+"Payment Overdue" = "付款逾期";
+"Rent Reminder" = "房租提醒";
+
+/* 收款類型 */
+"Rent" = "房租";
+"Late Fee" = "滯納金";
+"Deposit" = "押金";
+"Deposit Return" = "退還押金";
+
+/* 房屋類型 */
+"Residential" = "住宅";
+"Commercial" = "商業";
+
+/* 支付週期 */
+"Monthly" = "每月";
+"Bi-monthly" = "每兩月";
+"Quarterly" = "每季";
+"Yearly" = "每年";
+
+/* 合同狀態 */
+"Active" = "進行中";
+"Expiring Soon" = "即將到期";
+"Expired" = "已到期";
+"Ended" = "已結束";
+"Upcoming" = "未開始";
+
+/* 付款狀態 */
+"Paid" = "已支付";
+"Overdue" = "逾期";
+"Due Soon" = "即將到期";
+"Upcoming" = "即將到來";
+
+
