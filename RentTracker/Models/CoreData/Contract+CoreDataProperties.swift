@@ -59,16 +59,3 @@ extension Contract {
 extension Contract : Identifiable {
 
 }
-
-// MARK: - Decimal Conversion
-extension Contract {
-    var rentAmount: Decimal {
-        get { rentAmount?.decimalValue ?? 0 }
-        set { rentAmount = NSDecimalNumber(decimal: newValue) }
-    }
-    
-    var depositAmount: Decimal {
-        get { depositAmount?.decimalValue ?? 0 }
-        set { depositAmount = NSDecimalNumber(decimal: newValue) }
-    }
-}

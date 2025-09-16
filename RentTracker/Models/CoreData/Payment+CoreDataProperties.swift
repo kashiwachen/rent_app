@@ -23,10 +23,3 @@ extension Payment : Identifiable {
 
 }
 
-// MARK: - Decimal Conversion
-extension Payment {
-    var amount: Decimal {
-        get { amount?.decimalValue ?? 0 }
-        set { amount = NSDecimalNumber(decimal: newValue) }
-    }
-}

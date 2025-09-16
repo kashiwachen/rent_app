@@ -19,11 +19,3 @@ extension Expense {
 extension Expense : Identifiable {
 
 }
-
-// MARK: - Decimal Conversion
-extension Expense {
-    var amount: Decimal {
-        get { amount?.decimalValue ?? 0 }
-        set { amount = NSDecimalNumber(decimal: newValue) }
-    }
-}

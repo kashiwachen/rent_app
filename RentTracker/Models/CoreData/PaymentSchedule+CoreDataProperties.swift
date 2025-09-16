@@ -20,10 +20,3 @@ extension PaymentSchedule : Identifiable {
 
 }
 
-// MARK: - Decimal Conversion
-extension PaymentSchedule {
-    var amount: Decimal {
-        get { amount?.decimalValue ?? 0 }
-        set { amount = NSDecimalNumber(decimal: newValue) }
-    }
-}
