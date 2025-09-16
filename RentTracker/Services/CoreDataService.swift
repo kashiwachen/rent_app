@@ -34,8 +34,11 @@ class CoreDataService {
 
     func calculateYearlyIncome(year: Int) -> Decimal {
         let calendar = Calendar.current
-        let startDate = calendar.date(from: DateComponents(year: year, month: 1, day: 1))!
-        let endDate = calendar.date(from: DateComponents(year: year + 1, month: 1, day: 1))!
+        guard let startDate = calendar.date(from: DateComponents(year: year, month: 1, day: 1)),
+              let endDate = calendar.date(from: DateComponents(year: year + 1, month: 1, day: 1)) else {
+            print("Failed to create date range for year \(year)")
+            return Decimal.zero
+        }
 
         let request: NSFetchRequest<Payment> = Payment.fetchRequest()
         request.predicate = NSPredicate(format: "paymentDate >= %@ AND paymentDate < %@ AND paymentType.name LIKE 'Rent'",
@@ -54,8 +57,11 @@ class CoreDataService {
 
     func calculateYearlyExpenses(year: Int) -> Decimal {
         let calendar = Calendar.current
-        let startDate = calendar.date(from: DateComponents(year: year, month: 1, day: 1))!
-        let endDate = calendar.date(from: DateComponents(year: year + 1, month: 1, day: 1))!
+        guard let startDate = calendar.date(from: DateComponents(year: year, month: 1, day: 1)),
+              let endDate = calendar.date(from: DateComponents(year: year + 1, month: 1, day: 1)) else {
+            print("Failed to create date range for year \(year)")
+            return Decimal.zero
+        }
 
         let request: NSFetchRequest<Expense> = Expense.fetchRequest()
         request.predicate = NSPredicate(format: "expenseDate >= %@ AND expenseDate < %@",
