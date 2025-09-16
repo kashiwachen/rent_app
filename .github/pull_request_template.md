@@ -1,6 +1,4 @@
-## [<type-of-change>] <pr-summary>
-
-Briefly summarize the change in one sentence.
+<!-- PR title should be [<type-of-change>] <pr-summary> -- >
 
 ## Summary
 
