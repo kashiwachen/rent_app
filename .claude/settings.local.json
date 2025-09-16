@@ -2,11 +2,16 @@
   "permissions": {
     "allow": [
       "Bash(gh repo create:*)",
+      "Bash(gh pr:*)",
+      "Bash(gh api:*)",
       "Bash(git stash:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(git checkout:*)"
+      "Bash(git checkout:*)",
+      "Bash(git pull:*)",
+      "Bash(git merge:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": [],
     "ask": []
