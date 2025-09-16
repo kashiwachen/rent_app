@@ -1,0 +1,97 @@
+---
+description: Document Management and File Consistency Rules
+globs: PRD.md,DESIGN_SPEC.md,README.md,*.md
+---
+
+# Document Management Rules
+
+## Core Documents
+The OSCAR system maintains these critical documents throughout the workflow:
+
+### 1. [PRD.md](mdc:PRD.md) - Product Requirements Document
+- **Owner**: Product Manager Agent
+- **Purpose**: Detailed product requirements and user stories
+- **Dependencies**: None (starting document)
+- **Required Sections**:
+  - Product Overview
+  - Target Users and Scenarios
+  - Feature Requirements and Priorities
+  - User Stories and Acceptance Criteria
+  - MVP Scope Definition
+  - Success Metrics
+
+### 2. [DESIGN_SPEC.md](mdc:DESIGN_SPEC.md) - System Design Specification
+- **Owner**: System Architect Agent  
+- **Purpose**: Technical architecture and implementation blueprint
+- **Dependencies**: Must reference and fulfill [PRD.md](mdc:PRD.md) requirements
+- **Required Sections**:
+  - System Architecture Overview
+  - Technology Stack Decisions
+  - Data Models and Database Schema
+  - API Specifications
+  - Component Design and Interfaces
+  - Security and Performance Requirements
+  - Implementation Guidelines
+
+### 3. [README.md](mdc:README.md) - Project Documentation
+- **Owner**: Software Engineer Agent
+- **Purpose**: Project setup, usage, and maintenance guide
+- **Dependencies**: Must align with implemented code and design specs
+- **Required Sections**:
+  - Project Description
+  - Installation Instructions
+  - Usage Examples
+  - API Documentation
+  - Development Setup
+  - Deployment Guide
+
+## Document Consistency Rules
+
+### Version Control
+- Each document must include creation and last modified timestamps
+- Track which agent was responsible for each major revision
+- Maintain change log for significant updates
+
+### Cross-Reference Validation
+- [DESIGN_SPEC.md](mdc:DESIGN_SPEC.md) must explicitly reference [PRD.md](mdc:PRD.md) requirements
+- Implementation code must align with [DESIGN_SPEC.md](mdc:DESIGN_SPEC.md) specifications
+- [README.md](mdc:README.md) must accurately reflect implemented features
+
+### Quality Standards
+- All documents must use consistent markdown formatting
+- Include clear section headers and table of contents
+- Use proper code blocks and syntax highlighting
+- Maintain professional tone and clear language
+- Include diagrams and examples where helpful
+
+## File Organization
+```
+/project-root/
+├── PRD.md              # Product requirements
+├── DESIGN_SPEC.md      # System design
+├── README.md           # Project documentation
+├── /src/               # Implementation code
+├── /docs/              # Additional documentation
+└── /tests/             # Test files
+```
+
+## Handoff Validation
+Before each phase transition, validate:
+
+1. **Product → Architecture**: 
+   - [PRD.md](mdc:PRD.md) is complete and approved
+   - All requirements are clearly defined
+   - MVP scope is established
+
+2. **Architecture → Implementation**:
+   - [DESIGN_SPEC.md](mdc:DESIGN_SPEC.md) addresses all PRD requirements
+   - Technical specifications are detailed and actionable
+   - Architecture decisions are justified
+
+3. **Implementation → Delivery**:
+   - Code implements all design specifications
+   - [README.md](mdc:README.md) provides accurate setup instructions
+   - All deliverables are tested and functional
+
+## Document Templates
+Each agent should follow established templates for consistency and completeness. Templates ensure all required information is captured and properly formatted for the next phase of development.
