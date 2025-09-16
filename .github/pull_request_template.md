@@ -1,14 +1,6 @@
-## PR Title
+## [<type-of-change>] <pr-summary>
 
 Briefly summarize the change in one sentence.
-
-## Type of change
-
-- [ ] Feature
-- [ ] Fix
-- [ ] Refactor
-- [ ] Docs
-- [ ] Chore
 
 ## Summary
 
@@ -49,5 +41,3 @@ Briefly summarize the change in one sentence.
 - Rollout plan:
 - Risk level: Low / Medium / High
 - Mitigations / rollback plan:
-
-
