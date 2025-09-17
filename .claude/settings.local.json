@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(gh repo create:*)"
-    ],
-    "deny": [],
-    "ask": []
-  }
-}
