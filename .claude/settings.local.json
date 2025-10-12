@@ -14,7 +14,9 @@
       "Bash(git ls-tree:*)",
       "Bash(git fetch:*)",
       "Bash(git branch:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Read(//Users/oscar/.claude/agents/**)",
+      "mcp__serena__list_dir"
     ],
     "deny": [],
     "ask": []
