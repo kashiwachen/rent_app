@@ -1,0 +1,23 @@
+{
+  "@@locale": "en",
+  "appTitle": "RentTracker",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "properties": "Properties",
+  "contracts": "Contracts",
+  "payments": "Payments",
+  "reports": "Reports",
+  "settings": "Settings",
+  "addProperty": "Add Property",
+  "addContract": "Add Contract",
+  "addPayment": "Record Payment",
+  "overdue": "Overdue",
+  "dueSoon": "Due Soon",
+  "upcoming": "Upcoming",
+  "markPaid": "Mark Paid",
+  "cancel": "Cancel",
+  "save": "Save",
+  "delete": "Delete",
+  "edit": "Edit"
+}

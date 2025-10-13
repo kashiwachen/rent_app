@@ -1,0 +1,20 @@
+{
+  "@@locale": "zh",
+  "appTitle": "租金管家",
+  "properties": "房产",
+  "contracts": "合同",
+  "payments": "付款",
+  "reports": "报告",
+  "settings": "设置",
+  "addProperty": "添加房产",
+  "addContract": "添加合同",
+  "addPayment": "记录付款",
+  "overdue": "逾期",
+  "dueSoon": "即将到期",
+  "upcoming": "即将到来",
+  "markPaid": "标记已付",
+  "cancel": "取消",
+  "save": "保存",
+  "delete": "删除",
+  "edit": "编辑"
+}

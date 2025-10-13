@@ -1,0 +1,20 @@
+{
+  "@@locale": "zh_Hant",
+  "appTitle": "租金管家",
+  "properties": "房產",
+  "contracts": "合同",
+  "payments": "付款",
+  "reports": "報告",
+  "settings": "設定",
+  "addProperty": "新增房產",
+  "addContract": "新增合同",
+  "addPayment": "記錄付款",
+  "overdue": "逾期",
+  "dueSoon": "即將到期",
+  "upcoming": "即將到來",
+  "markPaid": "標記已付",
+  "cancel": "取消",
+  "save": "儲存",
+  "delete": "刪除",
+  "edit": "編輯"
+}

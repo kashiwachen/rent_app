@@ -16,7 +16,13 @@
       "Bash(git branch:*)",
       "Bash(git log:*)",
       "Read(//Users/oscar/.claude/agents/**)",
-      "mcp__serena__list_dir"
+      "mcp__serena__list_dir",
+      "Bash(flutter:*)",
+      "Bash(dart:*)",
+      "Read(//Users/oscar/**)",
+      "Bash(brew install:*)",
+      "Bash(xcodebuild:*)",
+      "Bash(xcode-select:*)"
     ],
     "deny": [],
     "ask": []
