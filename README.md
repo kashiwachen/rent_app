@@ -34,60 +34,50 @@ A Flutter iOS app for landlords to manage rental properties, tenants, contracts,
 
 ## 📂 Project Structure
 
-### App Source Code
 ```
-lib/                        # 📱 APP SOURCE CODE
-├── main.dart              # App entry point
-├── core/                  # Core functionality
-│   ├── database/         # Drift database configuration
-│   ├── enums/            # App-wide enumerations
-│   └── constants/        # App constants
-├── models/               # Data models (Drift-generated)
-├── repositories/         # Business logic layer
-│   ├── property_repository.dart
-│   ├── contract_repository.dart
-│   ├── payment_repository.dart
-│   └── expense_repository.dart
-├── services/             # Services layer
-│   ├── notification_service.dart
-│   ├── pdf_export_service.dart
-│   └── backup_service.dart
-├── screens/              # UI screens
-│   ├── properties/       # Property management screens
-│   ├── contracts/        # Contract management screens
-│   ├── payments/         # Payment tracking screens
-│   ├── reports/          # Financial reports screens
-│   └── settings/         # Settings screens
-├── widgets/              # Reusable UI components
-├── providers/            # Riverpod state providers
-└── l10n/                 # Localization ARB files
-
-test/                      # 🧪 TEST CODE
-├── repositories/         # Repository unit tests
-├── services/             # Service unit tests
-└── widgets/              # Widget tests
-
-ios/                       # 📱 iOS NATIVE CODE
-├── Runner/               # iOS app configuration
-└── Runner.xcodeproj/     # Xcode project
-
-pubspec.yaml              # 📦 Flutter dependencies
-l10n.yaml                 # 🌍 Localization config
-analysis_options.yaml     # 📊 Dart linter config
-```
-
-### Documentation & Claude Files
-```
-PRD.md                    # 📋 Product Requirements (Claude)
-DESIGN_SPEC.md            # 🏗️  Technical Design (Claude)
-PROGRESS.md               # 📈 Development Progress (Claude)
-README.md                 # 📖 This file
-
-.claude/                  # 🤖 Claude Code configuration
-├── agents/               # Agent prompts
-└── settings.local.json   # Local settings
-
-RentTracker_Swift_Backup/ # 🗄️  Old Swift project (archived)
+rent_app/                      # Project root
+│
+├── app/                       # 📱 FLUTTER APP SOURCE CODE
+│   ├── lib/                  # Dart source code
+│   │   ├── main.dart        # App entry point
+│   │   ├── core/            # Core functionality
+│   │   │   ├── database/   # Drift database
+│   │   │   ├── enums/      # Enumerations
+│   │   │   └── constants/  # Constants
+│   │   ├── models/          # Data models (Drift-generated)
+│   │   ├── repositories/    # Business logic layer
+│   │   ├── services/        # Services layer
+│   │   ├── screens/         # UI screens
+│   │   │   ├── properties/ # Property management
+│   │   │   ├── contracts/  # Contract management
+│   │   │   ├── payments/   # Payment tracking
+│   │   │   ├── reports/    # Financial reports
+│   │   │   └── settings/   # Settings
+│   │   ├── widgets/         # Reusable widgets
+│   │   ├── providers/       # Riverpod providers
+│   │   └── l10n/            # Localization (ARB files)
+│   │
+│   ├── test/                 # 🧪 Tests
+│   │   ├── repositories/    # Repository tests
+│   │   ├── services/        # Service tests
+│   │   └── widgets/         # Widget tests
+│   │
+│   ├── ios/                  # 📱 iOS native code
+│   │   ├── Runner/          # iOS app wrapper
+│   │   └── Runner.xcodeproj/ # Xcode project
+│   │
+│   ├── pubspec.yaml          # Flutter dependencies
+│   ├── l10n.yaml             # Localization config
+│   └── analysis_options.yaml # Dart linter config
+│
+├── PRD.md                     # 📋 Product Requirements (Claude)
+├── DESIGN_SPEC.md             # 🏗️  Technical Design (Claude)
+├── PROGRESS.md                # 📈 Development Progress (Claude)
+├── README.md                  # 📖 This file
+│
+└── .claude/                   # 🤖 Claude Code configuration
+    ├── agents/                # Agent prompts
+    └── settings.local.json    # Local settings
 ```
 
 ## 🛠️ Requirements
@@ -113,17 +103,22 @@ RentTracker_Swift_Backup/ # 🗄️  Old Swift project (archived)
    cd rent_app
    ```
 
-3. **Install dependencies**:
+3. **Navigate to app directory**:
+   ```bash
+   cd app
+   ```
+
+4. **Install dependencies**:
    ```bash
    flutter pub get
    ```
 
-4. **Generate Drift database code** (when database is implemented):
+5. **Generate Drift database code** (when database is implemented):
    ```bash
    flutter pub run build_runner build --delete-conflicting-outputs
    ```
 
-5. **Run the app**:
+6. **Run the app**:
    ```bash
    flutter run
    ```
@@ -131,7 +126,7 @@ RentTracker_Swift_Backup/ # 🗄️  Old Swift project (archived)
 ### Running Tests
 
 ```bash
-# Run all tests
+cd app
 flutter test
 
 # Run tests with coverage
@@ -141,7 +136,7 @@ flutter test --coverage
 ### Code Analysis
 
 ```bash
-# Analyze code quality
+cd app
 flutter analyze
 
 # Format code
@@ -174,7 +169,7 @@ Following **TDD (Test-Driven Development)**:
 
 ### Localization
 
-Add translations to ARB files in `lib/l10n/`:
+Add translations to ARB files in `app/lib/l10n/`:
 - `app_en.arb` (English - template)
 - `app_zh.arb` (Chinese - fallback)
 - `app_zh_Hans.arb` (Simplified Chinese)
@@ -198,28 +193,29 @@ Run `flutter pub get` after modifying ARB files to regenerate.
 
 See **PROGRESS.md** for detailed task breakdown.
 
-## 📚 Key Documentation Files
+## 📚 Documentation Files
 
-| File | Purpose | Generated By |
-|------|---------|--------------|
-| **PRD.md** | Product Requirements Document | Claude (product-manager agent) |
-| **DESIGN_SPEC.md** | Technical Design Specification (973 lines) | Claude (architect agent) |
-| **PROGRESS.md** | Development Progress Tracker | Claude (engineer agent) |
-| **README.md** | Project overview (this file) | You & Claude |
+| File | Purpose | Location | Generated By |
+|------|---------|----------|--------------|
+| **PRD.md** | Product Requirements Document | `/PRD.md` | Claude (product-manager) |
+| **DESIGN_SPEC.md** | Technical Design (973 lines) | `/DESIGN_SPEC.md` | Claude (architect) |
+| **PROGRESS.md** | Development Progress Tracker | `/PROGRESS.md` | Claude (engineer) |
+| **README.md** | Project overview | `/README.md` | You & Claude |
 
 ## 🗂️ Key Source Code Locations
 
-| Path | What's Inside |
-|------|---------------|
-| `lib/` | **All Dart app code** |
-| `lib/main.dart` | App entry point with Riverpod setup |
-| `lib/core/` | Database, enums, constants |
-| `lib/repositories/` | Business logic (not yet implemented) |
-| `lib/screens/` | UI screens (placeholders) |
-| `lib/l10n/` | Localization files (3 languages) |
-| `test/` | Unit and widget tests |
-| `ios/` | iOS native code and Xcode project |
-| `pubspec.yaml` | Flutter dependencies |
+| Path | What's Inside | Navigate |
+|------|---------------|----------|
+| `app/` | **All Flutter app code** | `cd app` |
+| `app/lib/` | All Dart source code | `cd app/lib` |
+| `app/lib/main.dart` | App entry point | - |
+| `app/lib/core/` | Database, enums, constants | - |
+| `app/lib/repositories/` | Business logic (not yet implemented) | - |
+| `app/lib/screens/` | UI screens (placeholders) | - |
+| `app/lib/l10n/` | Localization (3 languages) | - |
+| `app/test/` | Unit and widget tests | `cd app/test` |
+| `app/ios/` | iOS native code | - |
+| `app/pubspec.yaml` | Flutter dependencies | - |
 
 ## 🤝 Contributing
 
@@ -233,3 +229,4 @@ MIT
 
 **Current Status**: Phase 1 Week 1 Day 2 ✅ (Project Setup Complete)
 **Next Steps**: Implement database tables and repositories (Days 3-7)
+**Working Directory**: All Flutter commands should be run from `app/` folder
