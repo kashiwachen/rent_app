@@ -4,11 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:rent_tracker/l10n/app_localizations.dart';
 
 void main() {
-  runApp(
-    const ProviderScope(
-      child: RentTrackerApp(),
-    ),
-  );
+  runApp(const ProviderScope(child: RentTrackerApp()));
 }
 
 class RentTrackerApp extends StatelessWidget {
@@ -40,10 +36,7 @@ class RentTrackerApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
         useMaterial3: true,
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          elevation: 0,
-        ),
+        appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
       ),
 
       // Dark theme configuration
@@ -53,10 +46,7 @@ class RentTrackerApp extends StatelessWidget {
           brightness: Brightness.dark,
         ),
         useMaterial3: true,
-        appBarTheme: const AppBarTheme(
-          centerTitle: true,
-          elevation: 0,
-        ),
+        appBarTheme: const AppBarTheme(centerTitle: true, elevation: 0),
       ),
 
       themeMode: ThemeMode.system,
@@ -75,9 +65,7 @@ class HomeScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.appTitle),
-      ),
+      appBar: AppBar(title: Text(l10n.appTitle)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
