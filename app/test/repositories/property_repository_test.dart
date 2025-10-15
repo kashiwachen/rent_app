@@ -55,34 +55,38 @@ void main() {
       expect(property.propertyType, PropertyType.commercial.value);
     });
 
-    test('addProperty - should enforce unique constraint on name+address',
-        () async {
-      // Arrange
-      await repository.addProperty(
-        name: 'Duplicate Property',
-        address: '789 Same St',
-        type: PropertyType.residential,
-      );
-
-      // Act & Assert
-      expect(
-        () => repository.addProperty(
+    test(
+      'addProperty - should enforce unique constraint on name+address',
+      () async {
+        // Arrange
+        await repository.addProperty(
           name: 'Duplicate Property',
           address: '789 Same St',
-          type: PropertyType.commercial,
-        ),
-        throwsException,
-      );
-    });
+          type: PropertyType.residential,
+        );
 
-    test('getAllProperties - should return empty list when no properties exist',
-        () async {
-      // Act
-      final properties = await repository.getAllProperties();
+        // Act & Assert
+        expect(
+          () => repository.addProperty(
+            name: 'Duplicate Property',
+            address: '789 Same St',
+            type: PropertyType.commercial,
+          ),
+          throwsException,
+        );
+      },
+    );
 
-      // Assert
-      expect(properties, isEmpty);
-    });
+    test(
+      'getAllProperties - should return empty list when no properties exist',
+      () async {
+        // Act
+        final properties = await repository.getAllProperties();
+
+        // Assert
+        expect(properties, isEmpty);
+      },
+    );
 
     test('getAllProperties - should return all properties', () async {
       // Arrange
@@ -124,14 +128,16 @@ void main() {
       expect(property.address, 'Findable Address');
     });
 
-    test('getPropertyById - should return null when id does not exist',
-        () async {
-      // Act
-      final property = await repository.getPropertyById(999);
+    test(
+      'getPropertyById - should return null when id does not exist',
+      () async {
+        // Act
+        final property = await repository.getPropertyById(999);
 
-      // Assert
-      expect(property, isNull);
-    });
+        // Assert
+        expect(property, isNull);
+      },
+    );
 
     test('updateProperty - should update existing property', () async {
       // Arrange
@@ -167,23 +173,26 @@ void main() {
       );
     });
 
-    test('updateProperty - should throw when property does not exist', () async {
-      // Arrange
-      final nonExistentProperty = Property(
-        id: 999,
-        name: 'Non Existent',
-        address: 'Nowhere',
-        propertyType: PropertyType.residential.value,
-        createdAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-      );
+    test(
+      'updateProperty - should throw when property does not exist',
+      () async {
+        // Arrange
+        final nonExistentProperty = Property(
+          id: 999,
+          name: 'Non Existent',
+          address: 'Nowhere',
+          propertyType: PropertyType.residential.value,
+          createdAt: DateTime.now(),
+          updatedAt: DateTime.now(),
+        );
 
-      // Act & Assert
-      expect(
-        () => repository.updateProperty(nonExistentProperty),
-        throwsException,
-      );
-    });
+        // Act & Assert
+        expect(
+          () => repository.updateProperty(nonExistentProperty),
+          throwsException,
+        );
+      },
+    );
 
     test('deleteProperty - should delete existing property', () async {
       // Arrange
@@ -201,11 +210,13 @@ void main() {
       expect(result, isNull);
     });
 
-    test('deleteProperty - should not throw when property does not exist',
-        () async {
-      // Act & Assert
-      expect(() => repository.deleteProperty(999), returnsNormally);
-    });
+    test(
+      'deleteProperty - should not throw when property does not exist',
+      () async {
+        // Act & Assert
+        expect(() => repository.deleteProperty(999), returnsNormally);
+      },
+    );
 
     test('deleteProperty - should cascade delete related contracts', () async {
       // Arrange
@@ -214,162 +225,180 @@ void main() {
       await seedTestContracts(db, propertyIds, tenantIds);
 
       // Verify contract exists
-      final contractsBefore =
-          await (db.select(db.contracts)..where((t) => t.propertyId.equals(propertyIds[0]))).get();
+      final contractsBefore = await (db.select(
+        db.contracts,
+      )..where((t) => t.propertyId.equals(propertyIds[0]))).get();
       expect(contractsBefore, isNotEmpty);
 
       // Act
       await repository.deleteProperty(propertyIds[0]);
 
       // Assert - contracts should be deleted due to cascade
-      final contractsAfter =
-          await (db.select(db.contracts)..where((t) => t.propertyId.equals(propertyIds[0]))).get();
+      final contractsAfter = await (db.select(
+        db.contracts,
+      )..where((t) => t.propertyId.equals(propertyIds[0]))).get();
       expect(contractsAfter, isEmpty);
     });
   });
 
   group('PropertyRepository - Business Logic', () {
-    test('getPropertiesWithContracts - should return empty list when no data',
-        () async {
-      // Act
-      final result = await repository.getPropertiesWithContracts();
+    test(
+      'getPropertiesWithContracts - should return empty list when no data',
+      () async {
+        // Act
+        final result = await repository.getPropertiesWithContracts();
 
-      // Assert
-      expect(result, isEmpty);
-    });
-
-    test('getPropertiesWithContracts - should return properties with contracts',
-        () async {
-      // Arrange
-      final propertyIds = await seedTestProperties(db);
-      final tenantIds = await seedTestTenants(db);
-      await seedTestContracts(db, propertyIds, tenantIds);
-
-      // Act
-      final result = await repository.getPropertiesWithContracts();
-
-      // Assert
-      expect(result, hasLength(3)); // 3 properties seeded
-      expect(result[0].property, isNotNull);
-      expect(result[0].contracts, isNotEmpty);
-      expect(result[0].contracts.length, greaterThan(0));
-    });
+        // Assert
+        expect(result, isEmpty);
+      },
+    );
 
     test(
-        'getPropertiesWithContracts - should include properties without contracts',
-        () async {
-      // Arrange
-      await repository.addProperty(
-        name: 'No Contract Property',
-        address: 'No Contract Address',
-        type: PropertyType.residential,
-      );
+      'getPropertiesWithContracts - should return properties with contracts',
+      () async {
+        // Arrange
+        final propertyIds = await seedTestProperties(db);
+        final tenantIds = await seedTestTenants(db);
+        await seedTestContracts(db, propertyIds, tenantIds);
 
-      // Act
-      final result = await repository.getPropertiesWithContracts();
+        // Act
+        final result = await repository.getPropertiesWithContracts();
 
-      // Assert
-      expect(result, hasLength(1));
-      expect(result[0].contracts, isEmpty);
-    });
-
-    test(
-        'getPropertiesWithContracts - should group contracts by property correctly',
-        () async {
-      // Arrange
-      final propertyIds = await seedTestProperties(db);
-      final tenantIds = await seedTestTenants(db);
-      await seedTestContracts(db, propertyIds, tenantIds);
-
-      // Add another contract for the first property
-      await db.into(db.contracts).insert(
-            ContractsCompanion.insert(
-              propertyId: propertyIds[0],
-              tenantId: tenantIds[1],
-              startDate: DateTime.now().add(const Duration(days: 365)),
-              endDate: DateTime.now().add(const Duration(days: 730)),
-              rentAmount: 1200.0,
-              paymentCycle: PaymentCycle.monthly.value,
-              depositAmount: 2400.0,
-              isActive: const Value(true),
-            ),
-          );
-
-      // Act
-      final result = await repository.getPropertiesWithContracts();
-
-      // Assert
-      final firstProperty =
-          result.firstWhere((pw) => pw.property.id == propertyIds[0]);
-      expect(firstProperty.contracts, hasLength(2));
-    });
-
-    test('calculateVacancyRate - should return 0 when no properties exist',
-        () async {
-      // Act
-      final rate = await repository.calculateVacancyRate();
-
-      // Assert
-      expect(rate, 0.0);
-    });
-
-    test('calculateVacancyRate - should return 1.0 when all properties vacant',
-        () async {
-      // Arrange
-      await repository.addProperty(
-        name: 'Vacant 1',
-        address: 'Address 1',
-        type: PropertyType.residential,
-      );
-      await repository.addProperty(
-        name: 'Vacant 2',
-        address: 'Address 2',
-        type: PropertyType.commercial,
-      );
-
-      // Act
-      final rate = await repository.calculateVacancyRate();
-
-      // Assert
-      expect(rate, 1.0);
-    });
-
-    test('calculateVacancyRate - should return 0.0 when all properties occupied',
-        () async {
-      // Arrange
-      final propertyIds = await seedTestProperties(db);
-      final tenantIds = await seedTestTenants(db);
-      await seedTestContracts(db, propertyIds, tenantIds);
-
-      // Make all contracts active
-      await db
-          .update(db.contracts)
-          .write(const ContractsCompanion(isActive: Value(true)));
-
-      // Act
-      final rate = await repository.calculateVacancyRate();
-
-      // Assert
-      expect(rate, 0.0);
-    });
+        // Assert
+        expect(result, hasLength(3)); // 3 properties seeded
+        expect(result[0].property, isNotNull);
+        expect(result[0].contracts, isNotEmpty);
+        expect(result[0].contracts.length, greaterThan(0));
+      },
+    );
 
     test(
-        'calculateVacancyRate - should calculate correct rate with mixed occupancy',
-        () async {
-      // Arrange
-      final propertyIds = await seedTestProperties(db);
-      final tenantIds = await seedTestTenants(db);
-      await seedTestContracts(db, propertyIds, tenantIds);
+      'getPropertiesWithContracts - should include properties without contracts',
+      () async {
+        // Arrange
+        await repository.addProperty(
+          name: 'No Contract Property',
+          address: 'No Contract Address',
+          type: PropertyType.residential,
+        );
 
-      // We have 3 properties: 2 with active contracts, 1 with inactive
-      // Expected vacancy rate = 1/3 ≈ 0.333...
+        // Act
+        final result = await repository.getPropertiesWithContracts();
 
-      // Act
-      final rate = await repository.calculateVacancyRate();
+        // Assert
+        expect(result, hasLength(1));
+        expect(result[0].contracts, isEmpty);
+      },
+    );
 
-      // Assert
-      expect(rate, closeTo(0.333, 0.01));
-    });
+    test(
+      'getPropertiesWithContracts - should group contracts by property correctly',
+      () async {
+        // Arrange
+        final propertyIds = await seedTestProperties(db);
+        final tenantIds = await seedTestTenants(db);
+        await seedTestContracts(db, propertyIds, tenantIds);
+
+        // Add another contract for the first property
+        await db
+            .into(db.contracts)
+            .insert(
+              ContractsCompanion.insert(
+                propertyId: propertyIds[0],
+                tenantId: tenantIds[1],
+                startDate: DateTime.now().add(const Duration(days: 365)),
+                endDate: DateTime.now().add(const Duration(days: 730)),
+                rentAmount: 1200.0,
+                paymentCycle: PaymentCycle.monthly.value,
+                depositAmount: 2400.0,
+                isActive: const Value(true),
+              ),
+            );
+
+        // Act
+        final result = await repository.getPropertiesWithContracts();
+
+        // Assert
+        final firstProperty = result.firstWhere(
+          (pw) => pw.property.id == propertyIds[0],
+        );
+        expect(firstProperty.contracts, hasLength(2));
+      },
+    );
+
+    test(
+      'calculateVacancyRate - should return 0 when no properties exist',
+      () async {
+        // Act
+        final rate = await repository.calculateVacancyRate();
+
+        // Assert
+        expect(rate, 0.0);
+      },
+    );
+
+    test(
+      'calculateVacancyRate - should return 1.0 when all properties vacant',
+      () async {
+        // Arrange
+        await repository.addProperty(
+          name: 'Vacant 1',
+          address: 'Address 1',
+          type: PropertyType.residential,
+        );
+        await repository.addProperty(
+          name: 'Vacant 2',
+          address: 'Address 2',
+          type: PropertyType.commercial,
+        );
+
+        // Act
+        final rate = await repository.calculateVacancyRate();
+
+        // Assert
+        expect(rate, 1.0);
+      },
+    );
+
+    test(
+      'calculateVacancyRate - should return 0.0 when all properties occupied',
+      () async {
+        // Arrange
+        final propertyIds = await seedTestProperties(db);
+        final tenantIds = await seedTestTenants(db);
+        await seedTestContracts(db, propertyIds, tenantIds);
+
+        // Make all contracts active
+        await db
+            .update(db.contracts)
+            .write(const ContractsCompanion(isActive: Value(true)));
+
+        // Act
+        final rate = await repository.calculateVacancyRate();
+
+        // Assert
+        expect(rate, 0.0);
+      },
+    );
+
+    test(
+      'calculateVacancyRate - should calculate correct rate with mixed occupancy',
+      () async {
+        // Arrange
+        final propertyIds = await seedTestProperties(db);
+        final tenantIds = await seedTestTenants(db);
+        await seedTestContracts(db, propertyIds, tenantIds);
+
+        // We have 3 properties: 2 with active contracts, 1 with inactive
+        // Expected vacancy rate = 1/3 ≈ 0.333...
+
+        // Act
+        final rate = await repository.calculateVacancyRate();
+
+        // Assert
+        expect(rate, closeTo(0.333, 0.01));
+      },
+    );
 
     test('calculateVacancyRate - should only count active contracts', () async {
       // Arrange
@@ -381,7 +410,9 @@ void main() {
       final tenantIds = await seedTestTenants(db);
 
       // Add inactive contract
-      await db.into(db.contracts).insert(
+      await db
+          .into(db.contracts)
+          .insert(
             ContractsCompanion.insert(
               propertyId: property.id,
               tenantId: tenantIds[0],
