@@ -31,7 +31,9 @@ class ExpenseRepository {
     String? notes,
   }) async {
     try {
-      final id = await _db.into(_db.expenses).insert(
+      final id = await _db
+          .into(_db.expenses)
+          .insert(
             ExpensesCompanion.insert(
               propertyId: propertyId,
               amount: amount,
@@ -41,9 +43,9 @@ class ExpenseRepository {
             ),
           );
 
-      final expense = await (_db.select(_db.expenses)
-            ..where((t) => t.id.equals(id)))
-          .getSingle();
+      final expense = await (_db.select(
+        _db.expenses,
+      )..where((t) => t.id.equals(id))).getSingle();
 
       return expense;
     } catch (e) {
@@ -92,8 +94,10 @@ class ExpenseRepository {
 
       final query = _db.selectOnly(_db.expenses)
         ..addColumns([_db.expenses.amount.sum()])
-        ..where(_db.expenses.date.isBiggerOrEqualValue(startDate) &
-            _db.expenses.date.isSmallerThanValue(endDate));
+        ..where(
+          _db.expenses.date.isBiggerOrEqualValue(startDate) &
+              _db.expenses.date.isSmallerThanValue(endDate),
+        );
 
       final result = await query.getSingle();
       final sum = result.read(_db.expenses.amount.sum());
