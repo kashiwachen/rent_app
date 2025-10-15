@@ -32,7 +32,9 @@ class ContractRepository {
     required double depositAmount,
   }) async {
     try {
-      final id = await _db.into(_db.contracts).insert(
+      final id = await _db
+          .into(_db.contracts)
+          .insert(
             ContractsCompanion.insert(
               propertyId: propertyId,
               tenantId: tenantId,
@@ -45,9 +47,9 @@ class ContractRepository {
             ),
           );
 
-      final contract = await (_db.select(_db.contracts)
-            ..where((t) => t.id.equals(id)))
-          .getSingle();
+      final contract = await (_db.select(
+        _db.contracts,
+      )..where((t) => t.id.equals(id))).getSingle();
 
       return contract;
     } catch (e) {
@@ -71,9 +73,9 @@ class ContractRepository {
   /// Returns empty list if no active contracts exist
   Future<List<Contract>> getActiveContracts() async {
     try {
-      return await (_db.select(_db.contracts)
-            ..where((t) => t.isActive.equals(true)))
-          .get();
+      return await (_db.select(
+        _db.contracts,
+      )..where((t) => t.isActive.equals(true))).get();
     } catch (e) {
       throw Exception('Failed to get active contracts: $e');
     }
@@ -98,25 +100,24 @@ class ContractRepository {
   /// Throws exception if contract does not exist
   Future<void> updateContract(Contract contract) async {
     try {
-      final updatedContract = contract.copyWith(
-        updatedAt: DateTime.now(),
-      );
+      final updatedContract = contract.copyWith(updatedAt: DateTime.now());
 
-      final rowsAffected = await (_db.update(_db.contracts)
-            ..where((t) => t.id.equals(contract.id)))
-          .write(
-        ContractsCompanion(
-          propertyId: Value(updatedContract.propertyId),
-          tenantId: Value(updatedContract.tenantId),
-          startDate: Value(updatedContract.startDate),
-          endDate: Value(updatedContract.endDate),
-          rentAmount: Value(updatedContract.rentAmount),
-          paymentCycle: Value(updatedContract.paymentCycle),
-          depositAmount: Value(updatedContract.depositAmount),
-          isActive: Value(updatedContract.isActive),
-          updatedAt: Value(updatedContract.updatedAt),
-        ),
-      );
+      final rowsAffected =
+          await (_db.update(
+            _db.contracts,
+          )..where((t) => t.id.equals(contract.id))).write(
+            ContractsCompanion(
+              propertyId: Value(updatedContract.propertyId),
+              tenantId: Value(updatedContract.tenantId),
+              startDate: Value(updatedContract.startDate),
+              endDate: Value(updatedContract.endDate),
+              rentAmount: Value(updatedContract.rentAmount),
+              paymentCycle: Value(updatedContract.paymentCycle),
+              depositAmount: Value(updatedContract.depositAmount),
+              isActive: Value(updatedContract.isActive),
+              updatedAt: Value(updatedContract.updatedAt),
+            ),
+          );
 
       if (rowsAffected == 0) {
         throw Exception('Contract with id ${contract.id} not found');
@@ -131,14 +132,15 @@ class ContractRepository {
   /// Throws exception if contract does not exist
   Future<void> terminateContract(int id) async {
     try {
-      final rowsAffected = await (_db.update(_db.contracts)
-            ..where((t) => t.id.equals(id)))
-          .write(
-        ContractsCompanion(
-          isActive: const Value(false),
-          updatedAt: Value(DateTime.now()),
-        ),
-      );
+      final rowsAffected =
+          await (_db.update(
+            _db.contracts,
+          )..where((t) => t.id.equals(id))).write(
+            ContractsCompanion(
+              isActive: const Value(false),
+              updatedAt: Value(DateTime.now()),
+            ),
+          );
 
       if (rowsAffected == 0) {
         throw Exception('Contract with id $id not found');
@@ -190,7 +192,9 @@ class ContractRepository {
       while (currentDate.isBefore(endDate) ||
           currentDate.isAtSameMomentAs(endDate)) {
         // Create schedule for current date
-        final scheduleId = await _db.into(_db.paymentSchedules).insert(
+        final scheduleId = await _db
+            .into(_db.paymentSchedules)
+            .insert(
               PaymentSchedulesCompanion.insert(
                 contractId: contractId,
                 dueDate: currentDate,
@@ -199,9 +203,9 @@ class ContractRepository {
               ),
             );
 
-        final schedule = await (_db.select(_db.paymentSchedules)
-              ..where((t) => t.id.equals(scheduleId)))
-            .getSingle();
+        final schedule = await (_db.select(
+          _db.paymentSchedules,
+        )..where((t) => t.id.equals(scheduleId))).getSingle();
 
         schedules.add(schedule);
 
@@ -240,7 +244,9 @@ class ContractRepository {
     final daysInTargetMonth = _daysInMonth(targetYear, targetMonth);
 
     // Clamp the day to the valid range
-    final targetDay = date.day > daysInTargetMonth ? daysInTargetMonth : date.day;
+    final targetDay = date.day > daysInTargetMonth
+        ? daysInTargetMonth
+        : date.day;
 
     return DateTime(
       targetYear,
@@ -257,7 +263,9 @@ class ContractRepository {
   /// Returns the number of days in a given month
   int _daysInMonth(int year, int month) {
     // Create a date for the first day of the next month, then subtract 1 day
-    final nextMonth = month == 12 ? DateTime(year + 1, 1, 1) : DateTime(year, month + 1, 1);
+    final nextMonth = month == 12
+        ? DateTime(year + 1, 1, 1)
+        : DateTime(year, month + 1, 1);
     final lastDayOfMonth = nextMonth.subtract(const Duration(days: 1));
     return lastDayOfMonth.day;
   }
